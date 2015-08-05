@@ -1,0 +1,33 @@
+-nostdinc
+-nosyspath
+-i
+"$(ProjDirPath)/Project_Headers"
+-i
+"$(ProjDirPath)/Sources/ws2812b"
+-i
+"$(ProjDirPath)/Sources/MagniV_API"
+-i
+"$(ProjDirPath)/Sources/MagniV_API/CPMU"
+-I-
+-I"$(MCUToolsBaseDirEnv)/S12lisa_Support/s12lisac/include"
+-I-
+-I"$(MCUToolsBaseDirEnv)/S12lisa_Support/s12lisac/src"
+-I-
+-I"$(MCUToolsBaseDirEnv)/S12lisa_Support/s12lisac/lib_small"
+-w illpragmas
+-w possible
+-w extended
+-w extracomma
+-w emptydecl
+-w structclass
+-w notinlined
+-model small
+-bfield_lsbit_first
+-bfield_reduce_type
+-opt level=0
+-opt space
+-requireprotos
+-Cpp_Exceptions off
+-char unsigned
+-msgstyle parseable
+-sym full
