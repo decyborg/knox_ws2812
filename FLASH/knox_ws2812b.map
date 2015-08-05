@@ -26,8 +26,8 @@ Entry point: 0xFF802E (_Startup)
 _startupData is allocated at 0xFF803E and uses 20 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     4
-  _Copy    *toCopyDownBeg 0xFF859F
+  _Range   pZeroOut       0x1100     3
+  _Copy    *toCopyDownBeg 0xFF8510
   int      nofInitBodies  0
   _Cpp     *initBodies    0xFF8059
   int      nofFiniBodies  0
@@ -40,8 +40,8 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             62     R   0xFF8000   0xFF803D   ROM
 .startData                        27     R   0xFF803E   0xFF8058   ROM
-.text                           1350     R   0xFF8059   0xFF859E   ROM
-.copy                              4     R   0xFF859F   0xFF85A2   ROM
+.text                           1207     R   0xFF8059   0xFF850F   ROM
+.copy                              4     R   0xFF8510   0xFF8513   ROM
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .__absdata_ADC0RBP__               3   N/I      0x621      0x623   .absSeg0
 .__absdata_ADC0CBP__               3   N/I      0x61D      0x61F   .absSeg1
@@ -316,12 +316,12 @@ Section Name                    Size  Type     From       To       Segment
 .__absdata__INT_CFDATA1__          1   N/I       0x19       0x19   .absSeg270
 .__absdata__INT_CFDATA0__          1   N/I       0x18       0x18   .absSeg271
 .__absdata__INT_CFADDR__           1   N/I       0x17       0x17   .absSeg272
-.common                            4   R/W     0x1100     0x1103   RAM
+.common                            3   R/W     0x1100     0x1102   RAM
 .vectSeg273_vect                   3     R   0xFFFFFD   0xFFFFFF   .vectSeg273
 
 Summary of section sizes per section type:
-READ_ONLY (R):         5A6 (dec:     1446)
-READ_WRITE (R/W):      104 (dec:      260)
+READ_ONLY (R):         517 (dec:     1303)
+READ_WRITE (R/W):      103 (dec:      259)
 NO_INIT (N/I):         156 (dec:      342)
 
 *********************************************************************************************
@@ -339,22 +339,21 @@ MODULE:                 -- ws2812b_c.obj --
      set_bit                                 FF8059      32      50       1   .text       
      latch                                   FF808B      18      24       1   .text       
      send_color                              FF80A3      26      38       3   .text       
-     set_LED                                 FF80C9      16      22       1   .text       
+     set_LEDSTRIP                            FF80C9      28      40       1   .text       
 - VARIABLES:
 MODULE:                 -- main_c.obj --
 - PROCEDURES:
-     main                                    FF80DF      C5     197       1   .text       
+     main                                    FF80F1      24      36       1   .text       
 - VARIABLES:
-     state                                     1100       1       1       9   .common     
-     green                                     1101       1       1       6   .common     
-     blue                                      1102       1       1       6   .common     
-     red                                       1103       1       1       6   .common     
+     green                                     1100       1       1       1   .common     
+     blue                                      1101       1       1       1   .common     
+     red                                       1102       1       1       1   .common     
 MODULE:                 -- cpmu_c.obj --
 - PROCEDURES:
-     clock_init                              FF81A4      2D      45       1   .text       
-     calc_prs                                FF81D1     22C     556       1   .text       
-     search_prs                              FF83FD     12A     298       2   .text       
-     set_clock                               FF8527      71     113       1   .text       
+     clock_init                              FF8115      2D      45       1   .text       
+     calc_prs                                FF8142     22C     556       1   .text       
+     search_prs                              FF836E     12A     298       2   .text       
+     set_clock                               FF8498      71     113       1   .text       
 - VARIABLES:
 MODULE:                 -- starts12z_c.obj --
 - PROCEDURES:
@@ -643,15 +642,15 @@ MODULE:                 -- mc9s12zvl32_c.obj --
      _INT_CFADDR                                 17       1       1       0   .__absdata__INT_CFADDR__
 MODULE:                 -- rts12z.o (ansii.lib) --
 - PROCEDURES:
-     __copy                                  FF8598       7       7       6   .text       
+     __copy                                  FF8509       7       7       6   .text       
 - VARIABLES:
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  ws2812b_c.obj                                0    134      0
-  main_c.obj                                   4    197      0
+  ws2812b_c.obj                                0    152      0
+  main_c.obj                                   3     36      0
   cpmu_c.obj                                   0   1012      0
   starts12z_c.obj                              0     62      0
   mc9s12zvl32_c.obj                          342      0      0
@@ -662,12 +661,12 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  set_bit latch send_color set_LED main clock_init calc_prs search_prs 
+  set_bit latch send_color set_LEDSTRIP main clock_init calc_prs search_prs 
   set_clock __copy 
 SECTION: ".init"
   DoZeroOut DoCopyDown _Startup 
 SECTION: ".common"
-  state green blue red 
+  green blue red 
 SECTION: ".__absdata_ADC0RBP__"
   ADC0RBP 
 SECTION: ".__absdata_ADC0CBP__"
@@ -1492,49 +1491,53 @@ OBJECT LIST SORTED BY ADDRESS
      _LP0SR                                     985       1       1       0   .__absdata__LP0SR__
      _LP0IE                                     986       1       1       0   .__absdata__LP0IE__
      _LP0IF                                     987       1       1       0   .__absdata__LP0IF__
-     state                                     1100       1       1       9   .common     
-     green                                     1101       1       1       6   .common     
-     blue                                      1102       1       1       6   .common     
-     red                                       1103       1       1       6   .common     
+     green                                     1100       1       1       1   .common     
+     blue                                      1101       1       1       1   .common     
+     red                                       1102       1       1       1   .common     
      DoZeroOut                               FF8000      19      25       1   .init       
      DoCopyDown                              FF8019      15      21       1   .init       
      _Startup                                FF802E      10      16       0   .init       
      set_bit                                 FF8059      32      50       1   .text       
      latch                                   FF808B      18      24       1   .text       
      send_color                              FF80A3      26      38       3   .text       
-     set_LED                                 FF80C9      16      22       1   .text       
-     main                                    FF80DF      C5     197       1   .text       
-     clock_init                              FF81A4      2D      45       1   .text       
-     calc_prs                                FF81D1     22C     556       1   .text       
-     search_prs                              FF83FD     12A     298       2   .text       
-     set_clock                               FF8527      71     113       1   .text       
-     __copy                                  FF8598       7       7       6   .text       
+     set_LEDSTRIP                            FF80C9      28      40       1   .text       
+     main                                    FF80F1      24      36       1   .text       
+     clock_init                              FF8115      2D      45       1   .text       
+     calc_prs                                FF8142     22C     556       1   .text       
+     search_prs                              FF836E     12A     298       2   .text       
+     set_clock                               FF8498      71     113       1   .text       
+     __copy                                  FF8509       7       7       6   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+ws2812b_c.obj:
+  set_LED 
 cpmu_c.obj:
   clock_init_ext 
 rts12z.o (ansii.lib):
   __clear 
 NOT USED VARIABLES
 ws2812b_c.obj:
-  .dwarf_type.void .dwarf_type.unsigned char .dwarf.set_bit .dwarf.latch 
-  .dwarf.send_color .dwarf.set_LED .dwarf_loc.set_bit .dwarf_loc.latch 
-  .dwarf_loc.send_color .dwarf_loc.set_LED .dwarf_line.set_bit 
+  .dwarf_type.void .dwarf_type.unsigned char .dwarf_type.unsigned int 
+  .dwarf.set_bit .dwarf.latch .dwarf.send_color .dwarf.set_LED 
+  .dwarf.set_LEDSTRIP .dwarf_loc.set_bit .dwarf_loc.latch .dwarf_loc.send_color 
+  .dwarf_loc.set_LED .dwarf_loc.set_LEDSTRIP .dwarf_line.set_bit 
   .dwarf_line.latch .dwarf_line.send_color .dwarf_line.set_LED 
-  .dwarf_frame.set_bit .dwarf_frame.latch .dwarf_frame.send_color 
-  .dwarf_frame.set_LED .dwarf_pubnames.set_bit .dwarf_pubnames.latch 
-  .dwarf_pubnames.send_color .dwarf_pubnames.set_LED .dwarf_aranges.set_bit 
+  .dwarf_line.set_LEDSTRIP .dwarf_frame.set_bit .dwarf_frame.latch 
+  .dwarf_frame.send_color .dwarf_frame.set_LED .dwarf_frame.set_LEDSTRIP 
+  .dwarf_pubnames.set_bit .dwarf_pubnames.latch .dwarf_pubnames.send_color 
+  .dwarf_pubnames.set_LED .dwarf_pubnames.set_LEDSTRIP .dwarf_aranges.set_bit 
   .dwarf_aranges.latch .dwarf_aranges.send_color .dwarf_aranges.set_LED 
+  .dwarf_aranges.set_LEDSTRIP 
 main_c.obj:
   .dwarf.state .dwarf.green .dwarf.blue .dwarf.red .dwarf_type.void 
-  .dwarf_type.int .dwarf_type.unsigned char .dwarf.main .dwarf_loc.main 
-  .dwarf_line.main .dwarf_frame.main .dwarf_pubnames.state 
-  .dwarf_pubnames.green .dwarf_pubnames.blue .dwarf_pubnames.red 
-  .dwarf_pubnames.main .dwarf_aranges.state .dwarf_aranges.green 
-  .dwarf_aranges.blue .dwarf_aranges.red .dwarf_aranges.main 
+  .dwarf_type.unsigned char .dwarf.main .dwarf_loc.main .dwarf_line.main 
+  .dwarf_frame.main .dwarf_pubnames.state .dwarf_pubnames.green 
+  .dwarf_pubnames.blue .dwarf_pubnames.red .dwarf_pubnames.main 
+  .dwarf_aranges.state .dwarf_aranges.green .dwarf_aranges.blue 
+  .dwarf_aranges.red .dwarf_aranges.main state 
 cpmu_c.obj:
   .dwarf_type.void .dwarf_type.unsigned long .dwarf_type.256 
   .dwarf_typedef.clock_dividers .dwarf_type.unsigned char .dwarf_type.257 
@@ -2143,7 +2146,7 @@ rts12z.o (ansii.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xFF859F ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xFF8510 ---- SIZE       4 ---
 Filling bytes inserted
  00000000
 
@@ -2154,8 +2157,8 @@ DoZeroOut                 USES _startupData
 DoCopyDown                USES _startupData 
 _Startup                  USES __SEG_END_SSTACK DoZeroOut DoCopyDown main 
 send_color                USES set_bit 
-set_LED                   USES send_color 
-main                      USES red blue green state clock_init set_LED latch 
+set_LEDSTRIP              USES send_color latch 
+main                      USES clock_init blue green red set_LEDSTRIP 
 clock_init                USES calc_prs __copy set_clock 
 calc_prs                  USES search_prs __copy 
 search_prs                USES __copy 
@@ -2181,14 +2184,14 @@ DEPENDENCY TREE
  |  |  |  
  |  |  +- set_clock           
  |  |       
- |  +- set_LED             
- |  |  | 
- |  |  +- send_color          
- |  |     | 
- |  |     +- set_bit             
- |  |          
- |  +- latch               
- |       
+ |  +- set_LEDSTRIP        
+ |     | 
+ |     +- send_color          
+ |     |  | 
+ |     |  +- set_bit             
+ |     |       
+ |     +- latch               
+ |          
  +- _Startup            
     | 
     +- DoZeroOut           
@@ -2204,5 +2207,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 1446
+Total size of all blocks to be downloaded: 1303
 

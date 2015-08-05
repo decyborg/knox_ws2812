@@ -15,8 +15,8 @@
  * 		Rev 1.0 Initial Release
  * 		
  * */
-
 #include "cpmu.h"
+
 /** \addtogroup Core Core API functions  
  *  @{
  */

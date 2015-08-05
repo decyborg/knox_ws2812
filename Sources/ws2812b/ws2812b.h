@@ -9,7 +9,7 @@
 #define WS2812B_H_
 
 #define LED_STRIP_PIN PTS_PTS2	/* Pin used to send the signal to the LEDs */
-#define LED_NUMBER	30			/* Number of LEDs on the strip */
+#define TOTAL_LED_NUMBER	30			/* Number of LEDs on the strip */
 
 /**	Sends a 0 or a 1 depending on the received value
  * 	
@@ -34,5 +34,12 @@ void send_color(unsigned char color);
  * */
 void set_LED(unsigned char red, unsigned char green, unsigned char blue);
 
+/**	Sets the complete LED strip to the desired RGB color
+ * 
+ * 	@param red   Desired 8 bit value for the red LED
+ * 	@param green Desired 8 bit value for the green LED
+ * 	@param blue  Desired 8 bit value for the blue LED
+ * */
+void set_LEDSTRIP(unsigned char red, unsigned char green, unsigned char blue);
 
 #endif /* WS2812B_H_ */
